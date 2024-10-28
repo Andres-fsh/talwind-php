@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interfaz Móvil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/app_usuario.js"></script>
+</head>
+<body class="flex flex-col h-screen bg-gray-100">
+  <header class="flex items-center justify-between bg-blue-600 text-white px-4 py-3">
+    <h1 class="text-lg font-semibold">Mi App Mobile</h1>
+    <button id="menuButton" class="text-2xl focus:outline-none">
+      &#9776; <!-- Icono de menú hamburguesa -->
+    </button>
+  </header>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="fixed inset-0 transform -translate-x-full bg-blue-600 text-white w-64 h-full transition-transform duration-300 z-20">
+    <div class="p-4">
+      <h2 class="text-xl font-semibold mb-4">Menú</h2>
+      <ul>
+        <li class="mb-2"><a href="#" class="block py-2">Perfil</a></li>
+        <li class="mb-2"><a href="#" class="block py-2">Configuración</a></li>
+        <li class="mb-2"><a href="#" class="block py-2">Cerrar Sesión</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Overlay para cerrar el sidebar -->
+  <div id="overlay" class="fixed inset-0 bg-black opacity-50 hidden z-10"></div>
+
+  <!-- Contenido principal -->
+  <main class="flex-1 p-4 overflow-y-auto">
+    <h2 class="text-xl font-semibold mb-4">Bienvenido a Mi APP</h2>
+    <p>Contenido principal de la aplicación...</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center text-gray-700 p-3">
+    <p>© 2024 Mi App. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Botón flotante para crear un nuevo usuario -->
+  <button id="openModalButton" class="fixed bottom-4 right-4 bg-blue-600 text-white p-4 rounded-full shadow-lg focus:outline-none">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+    </svg>
+  </button>
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center hidden bg-gray-800 bg-opacity-50">
+      <div class="bg-white rounded-lg w-11/12 sm:w-1/3 mx-auto p-6 max-h-screen overflow-y-auto">
+        <h2 class="text-2xl font-semibold mb-4">Formulario</h2>
+  
+        <form id="formulario">
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="nombre">ID</label>
+            <input type="hidden" id="nombre" name="nombre" class="w-full p-2 border border-gray-300 rounded">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="w-full p-2 border border-gray-300 rounded">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+            <input type="email" id="email" name="email" class="w-full p-2 border border-gray-300 rounded">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="telefono">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" class="w-full p-2 border border-gray-300 rounded">
+          </div>
+          <!-- Form Group -->
+          <!-- Form Group -->
+  <div class="mb-4">
+    <label for="hs-toggle-password-with-checkbox" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
+    <input id="hs-toggle-password-with-checkbox" type="password" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter current password" value="12345qwerty">
+  
+    <!-- Checkbox -->
+    <div class="flex mt-4">
+      <input data-hs-toggle-password='{
+          "target": "#hs-toggle-password-with-checkbox"
+        }' id="hs-toggle-password-checkbox" type="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">
+      <label for="hs-toggle-password-checkbox" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Mostrar Contraseña</label>
+    </div>
+    <!-- End Checkbox -->
+  </div>
+  <!-- End Form Group -->
+  <!-- Fin form -->
+          <div class="flex justify-end">
+            <button type="button" id="closeModalButton" class="px-4 py-2 bg-gray-500 text-white rounded mr-2 hover:bg-gray-600">Cerrar</button>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  <!-- JavaScript para el sidebar -->
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    // Abrir/cerrar el sidebar
+    menuButton.addEventListener('click', () => {
+      sidebar.classList.toggle('-translate-x-full'); // Alternar la clase para mostrar/ocultar el sidebar
+      overlay.classList.toggle('hidden'); // Mostrar/ocultar el overlay
+    });
+
+    // Cerrar el sidebar al hacer clic en el overlay
+    overlay.addEventListener('click', () => {
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+    });
+    // Abrir el modal
+    document.getElementById('openModalButton').addEventListener('click', () => {
+      document.getElementById('modal').classList.remove('hidden');
+    });
+
+    // Cerrar el modal
+    document.getElementById('closeModalButton').addEventListener('click', () => {
+      document.getElementById('modal').classList.add('hidden');
+    });
+
+    // Cerrar modal al enviar el formulario
+    document.getElementById('formulario').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('modal').classList.add('hidden');
+      alert('Formulario enviado');
+    });
+  </script>
+  <!-- Modal de Éxito -->
+  <div id="modalExito" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 id="mensajeExito" class="text-lg font-semibold"></h2>
+    </div>
+</div>
+
+<!-- Modal de Result ado de Edición -->
+<div id="modalEdicion" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 id="mensajeEdicion" class="text-lg font-semibold"></h2>
+    </div>
+</div>
+
+<!-- Modal de Confirmación eliminar -->
+<div id="modalEliminar" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-semibold mb-4">¿Estás seguro de que deseas eliminar este usuario?</h2>
+        <div class="flex justify-end">
+            <button id="btnEliminar" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" aria-label="Eliminar usuario">Eliminar</button>
+            <button id="btnCancelar" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 ml-2" aria-label="Cancelar eliminación">Cancelar</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
